@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 
 import { type Session, type User } from "lucia";
-import { lucia } from "@/auth";
+import { client, lucia } from "@/auth";
 
 export const validateRequest = async (): Promise<
   { user: User; session: Session } | { user: null; session: null }
@@ -16,7 +16,6 @@ export const validateRequest = async (): Promise<
   }
 
   const result = await lucia.validateSession(sessionId);
-  // next.js throws when you attempt to set cookie when rendering page
   try {
     if (result.session && result.session.fresh) {
       const sessionCookie = lucia.createSessionCookie(result.session.id);
@@ -35,5 +34,10 @@ export const validateRequest = async (): Promise<
       );
     }
   } catch {}
+  const userData = await client.user.findFirst({
+    where: { id: result.user?.id },
+    select: { name: true, id: true, email: true },
+  });
+  result.user = userData;
   return result;
 };

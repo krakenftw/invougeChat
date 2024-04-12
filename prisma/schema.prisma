@@ -14,14 +14,25 @@ datasource db {
 }
 model User {
   id       String    @id
+  name String
   email String
   password String
+  agent Agent?
   sessions Session[]
 }
 
+model Agent{
+    id String @id 
+    userId String @unique
+    user User @relation(fields: [userId], references: [id])
+    name String
+  }
+
 model Session {
-  id        String   @id
+  id        String   @id 
   userId    String
+  name String
+  email String
   expiresAt DateTime
   user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 }

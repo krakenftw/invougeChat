@@ -3,11 +3,33 @@ import { NextResponse } from "next/server";
 import { TokenTextSplitter } from "langchain/text_splitter";
 import { Document } from "langchain/document";
 import { addUserDocuments } from "@/lib/pgVectorStore";
+import { validateRequest } from "@/lib/validateRequest";
+import { client } from "@/auth";
+import { v4 as uuidv4 } from "uuid";
 
 export async function POST(request: Request) {
   try {
-    const { website } = await request?.json();
-    const crawler = new Crawler([website], 10, 200);
+    const { user } = await validateRequest();
+    if (!user) {
+      return NextResponse.json({ status: 401, error: "Internal Server Error" });
+    }
+    const {
+      websites,
+      websiteName,
+    }: { websites: string[]; websiteName: string } = await request?.json();
+    if (!websites || !websiteName) {
+      return NextResponse.json({ error: "All fields required!", status: 402 });
+    }
+    const alreadyHavingAgent = await client.agent.findFirst({
+      where: { userId: user.id },
+    });
+    if (alreadyHavingAgent) {
+      return NextResponse.json({
+        error: "Agent already created!",
+        status: 400,
+      });
+    }
+    const crawler = new Crawler(websites, 10, 200);
     await crawler.start();
 
     const splitter = new TokenTextSplitter({
@@ -15,8 +37,6 @@ export async function POST(request: Request) {
       chunkSize: 400,
       chunkOverlap: 80,
     });
-
-    console.log(crawler.pages);
 
     const splittedDocuments = await Promise.all(
       crawler.pages.map(
@@ -35,9 +55,17 @@ export async function POST(request: Request) {
       ),
     );
 
-    addUserDocuments("a1b2", splittedDocuments.flat());
+    const agentId = await uuidv4();
 
-    return NextResponse.json({ status: 200 });
+    const agentData = await client.agent.create({
+      data: { id: agentId, userId: user.id, name: websiteName },
+    });
+    addUserDocuments(agentId, splittedDocuments.flat());
+
+    return NextResponse.json({
+      status: 200,
+      data: agentData,
+    });
   } catch (err) {
     console.log("Error while handling newModel route", err);
     return NextResponse.json({ status: 500, error: "Internal Server Error" });

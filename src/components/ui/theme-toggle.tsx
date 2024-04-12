@@ -17,7 +17,7 @@ function ThemeToggle() {
   return (
     <div>
       <Button
-        className='bg-transparent'
+        className="bg-transparent rounded-full h-12 p-0 w-12"
         variant={"outline"}
         onClick={handleThemeToggle}
       >

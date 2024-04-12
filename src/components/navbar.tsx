@@ -6,8 +6,13 @@ import Image from "next/image";
 import Logo from "../../public/Logo.svg";
 import LogoDark from "../../public/Logo_Dark.svg";
 import { useTheme } from "next-themes";
+import UserInfo from "./userInfo";
+import { Session } from "lucia";
+import { validateRequest } from "@/lib/validateRequest";
+import { useRouter } from "next/navigation";
 
-function Navbar() {
+function Navbar({ userData }: { userData: any }) {
+  const router = useRouter();
   const { theme } = useTheme();
   return (
     <div className="flex justify-center items-center">
@@ -21,22 +26,20 @@ function Navbar() {
           />
         </div>
         <div>
-          <Button variant={"secondary"} className=" shadow-md">
-            Dashboard
+          <Button
+            onClick={() => {
+              router.push(userData ? "/dashboard" : "/login");
+            }}
+            variant={"secondary"}
+            className=" shadow-md"
+          >
+            {userData ? "Dashboard" : "Login"}
           </Button>
         </div>
-        <div className="flex gap-4">
-          {/* <SignedIn>
-            <div className='flex gap-4 items-center'>
-              <UserButton />
-            </div>
-          </SignedIn>
-          <SignedOut>
-            <Link href={"/login"}>
-              <Button>Sign In</Button>
-            </Link>
-          </SignedOut> */}
+
+        <div className="flex gap-2 items-center justify-center">
           <ThemeToggle />
+          {userData && <UserInfo userData={userData} />}
         </div>
       </div>
     </div>

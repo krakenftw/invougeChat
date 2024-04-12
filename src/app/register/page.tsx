@@ -2,27 +2,44 @@
 import { lucia } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { validateRequest } from "@/lib/validateRequest";
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function Register() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPass: "",
+    name: "",
+  });
   const router = useRouter();
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    axios
-      .post("/api/user/register", { formData })
-      .then((res) => {
-        if (!res.data.error) {
-          router.push("/dashboard");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    if (formData.password != formData.confirmPass) {
+      toast({
+        title: "Registration Failed",
+        description: "Passwords do not match",
+        variant: "destructive",
       });
+      return;
+    }
+    const response = await axios.post("/api/user/register", { formData });
+    if (response.data.error) {
+      toast({
+        title: "Registration Failed",
+        description: response.data.error,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Registered Successfully",
+      });
+      router.push("/");
+    }
   };
 
   const handleChange = (e: any) => {
@@ -35,6 +52,17 @@ function Register() {
       <h1 className="text-xl my-4 font-bold">Register</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div>
+          <label htmlFor="name">Name</label>
+          <Input
+            onChange={handleChange}
+            required
+            name="name"
+            id="name"
+            value={formData.name}
+          />
+        </div>
+
+        <div>
           <label htmlFor="email">Email</label>
           <Input
             onChange={handleChange}
@@ -44,7 +72,6 @@ function Register() {
             value={formData.email}
           />
         </div>
-
         <div>
           <label htmlFor="password">Password</label>
           <Input
@@ -56,6 +83,18 @@ function Register() {
             value={formData.password}
           />
         </div>
+        <div>
+          <label htmlFor="confpass">Confirm Password</label>
+          <Input
+            type="confpass"
+            onChange={handleChange}
+            required
+            name="confirmPass"
+            id="confpass"
+            value={formData.confirmPass}
+          />
+        </div>
+
         <Button type="submit">Submit</Button>
       </form>
     </div>

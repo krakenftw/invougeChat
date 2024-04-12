@@ -7,13 +7,13 @@ import { v4 as uuidv4 } from "uuid";
 
 export async function POST(request: Request) {
   const { formData } = await request?.json();
-  if (!formData || !formData.email || !formData.password) {
+  if (!formData || !formData.name || !formData.email || !formData.password) {
     return NextResponse.json({ error: "All fields required", status: 300 });
   }
-  const alreadPresent = await client.user.findFirst({
+  const alreadyPresent = await client.user.findFirst({
     where: { email: formData.email },
   });
-  if (alreadPresent) {
+  if (alreadyPresent) {
     return NextResponse.json({
       status: 300,
       error: "Account with that email already exists",
@@ -23,11 +23,19 @@ export async function POST(request: Request) {
   const id = await uuidv4();
 
   const data = await client.user.create({
-    data: { id, email: formData.email, password: formData.password },
+    data: {
+      id,
+      name: formData.name,
+      email: formData.email,
+      password: hashedPassword,
+    },
   });
 
-  const session = await lucia.createSession(data.id, {});
-  const sessionCookie = await lucia.createSessionCookie(session.id);
+  const session = await lucia.createSession(data.id, {
+    email: data.email,
+    name: data.name,
+  });
+  const sessionCookie = lucia.createSessionCookie(session.id);
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
