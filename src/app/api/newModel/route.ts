@@ -4,8 +4,9 @@ import { TokenTextSplitter } from "langchain/text_splitter";
 import { Document } from "langchain/document";
 import { addUserDocuments } from "@/lib/pgVectorStore";
 import { validateRequest } from "@/lib/validateRequest";
-import { client } from "@/auth";
 import { v4 as uuidv4 } from "uuid";
+import { handleDatabaseUpdate } from "@/actions/agent.controller";
+import { prismaClient } from "@/lib/db";
 
 export async function POST(request: Request) {
   try {
@@ -20,7 +21,7 @@ export async function POST(request: Request) {
     if (!websites || !websiteName) {
       return NextResponse.json({ error: "All fields required!", status: 402 });
     }
-    const alreadyHavingAgent = await client.agent.findFirst({
+    const alreadyHavingAgent = await prismaClient.agent.findFirst({
       where: { userId: user.id },
     });
     if (alreadyHavingAgent) {
@@ -55,12 +56,8 @@ export async function POST(request: Request) {
       ),
     );
 
-    const agentId = await uuidv4();
-
-    const agentData = await client.agent.create({
-      data: { id: agentId, userId: user.id, name: websiteName },
-    });
-    addUserDocuments(agentId, splittedDocuments.flat());
+    const agentData = await handleDatabaseUpdate(user, websiteName);
+    addUserDocuments(agentData.id, splittedDocuments.flat());
 
     return NextResponse.json({
       status: 200,

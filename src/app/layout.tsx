@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { validateRequest } from "@/lib/validateRequest";
-import { client } from "@/auth";
 import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,6 +26,7 @@ export default async function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="dark">
             <Navbar userData={user} /> {children}
             <Toaster />
+            <p className="w-full text-center">Copyright ©InvougeChat</p>
           </ThemeProvider>
         </div>
       </body>

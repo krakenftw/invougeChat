@@ -14,19 +14,46 @@ datasource db {
 }
 model User {
   id       String    @id
-  name String
+  name String?
   email String
-  password String
-  agent Agent?
+  password String?
+  agent Agent? 
   sessions Session[]
+  github_id Int? @unique
+  username String?
 }
+
 
 model Agent{
     id String @id 
     userId String @unique
     user User @relation(fields: [userId], references: [id])
     name String
-  }
+    bot Bot?
+}
+model Bot{
+  id String @id  
+  userId String
+  agent Agent @relation(fields:[agentId],references:[id])
+  agentId String @unique
+  chatBotTitle     String
+  welcomeMessage   String
+  widgetColor      String
+  collectVisitorInfo Boolean
+  widgetButtonPosition String
+  fontFamily       String
+  fontUrl          String
+  convoStarters    String[]
+  profileDescription String
+  placeholder      String
+  style            String
+  showPopupText    Boolean
+  popupText        String
+  expandByDefault  Boolean
+  removePoweredBy  Boolean
+  chatIsLocked     Boolean
+  typingMessage    String
+}
 
 model Session {
   id        String   @id 

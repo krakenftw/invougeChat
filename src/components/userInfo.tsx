@@ -1,4 +1,3 @@
-import { validateRequest } from "@/lib/validateRequest";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
@@ -12,7 +11,7 @@ import { Button } from "./ui/button";
 import axios from "axios";
 import { signout } from "@/actions/auth.actions";
 
-export default async function UserInfo({ userData }: { userData: any }) {
+export default function UserInfo({ userData }: { userData: any }) {
   const handleLogout = () => {
     signout();
   };

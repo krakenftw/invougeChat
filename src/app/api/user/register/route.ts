@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { client, lucia } from "@/auth";
+import { lucia } from "@/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
+import { prismaClient } from "@/lib/db";
 
 export async function POST(request: Request) {
   const { formData } = await request?.json();
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
   const hashedPassword = await bcrypt.hash(formData.password, 10);
   const id = await uuidv4();
 
-  const data = await client.user.create({
+  const data = await prismaClient.user.create({
     data: {
       id,
       name: formData.name,

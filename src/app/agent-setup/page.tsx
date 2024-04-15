@@ -1,15 +1,15 @@
 import { redirect } from "next/navigation";
 import { validateRequest } from "@/lib/validateRequest";
 import AgentSetupInteractive from "@/components/agentSetupInteractive";
-import { client } from "@/auth";
 import { useToast } from "@/components/ui/use-toast";
+import { prismaClient } from "@/lib/db";
 
 export default async function AgentSetup() {
   const { user } = await validateRequest();
   if (!user) {
     redirect("/login");
   }
-  const agentData = await client.agent.findFirst({
+  const agentData = await prismaClient.agent.findFirst({
     where: { userId: user.id },
   });
   if (agentData) {

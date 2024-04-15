@@ -7,8 +7,6 @@ import Logo from "../../public/Logo.svg";
 import LogoDark from "../../public/Logo_Dark.svg";
 import { useTheme } from "next-themes";
 import UserInfo from "./userInfo";
-import { Session } from "lucia";
-import { validateRequest } from "@/lib/validateRequest";
 import { useRouter } from "next/navigation";
 
 function Navbar({ userData }: { userData: any }) {

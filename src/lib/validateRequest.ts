@@ -2,7 +2,8 @@
 import { cookies } from "next/headers";
 
 import { type Session, type User } from "lucia";
-import { client, lucia } from "@/auth";
+import { lucia } from "@/auth";
+import { prismaClient } from "./db";
 
 export const validateRequest = async (): Promise<
   { user: User; session: Session } | { user: null; session: null }
@@ -34,9 +35,8 @@ export const validateRequest = async (): Promise<
       );
     }
   } catch {}
-  const userData = await client.user.findFirst({
+  const userData = await prismaClient.user.findFirst({
     where: { id: result.user?.id },
-    select: { name: true, id: true, email: true },
   });
   result.user = userData;
   return result;

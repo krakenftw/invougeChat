@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { client, lucia } from "@/auth";
+import { lucia } from "@/auth";
 import { cookies } from "next/headers";
+import { prismaClient } from "@/lib/db";
 
 export async function POST(request: Request) {
   const { formData } = await request?.json();
   if (!formData || !formData.email || !formData.password) {
     return NextResponse.json({ error: "All fields required", status: 300 });
   }
-  const userData = await client.user.findFirst({
+  const userData = await prismaClient.user.findFirst({
     where: { email: formData.email },
   });
 
