@@ -20,7 +20,7 @@ export default function UserInfo({ userData }: { userData: any }) {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar>
-            <AvatarImage src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" />
+            <AvatarImage src={userData.profile_picture} />
             <AvatarFallback>{userData.name.substring(0, 2)}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>

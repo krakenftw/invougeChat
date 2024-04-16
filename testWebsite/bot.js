@@ -394,7 +394,7 @@ function createChatWidget(defaultSettings) {
     var poweredText = document.createElement("p");
     poweredText.classList.add("powered-text-kpk670t");
     poweredText.innerHTML =
-      "<a href='https://www.inoz.ai'>Powered by <b>Inoz.ai</b></a>";
+      "Powered by <b>InvougeChat.ai</b>";
     widget.appendChild(poweredText);
   }
 
@@ -1200,7 +1200,7 @@ function handleOnEnterPressed(event) {
   }
 }
 
-function addUserMessageToChat(custom_message) {
+async function addUserMessageToChat(custom_message) {
   const chatContainer = document.querySelector(".chat-container-kasl12csd");
   const allChat = document.getElementById("all-chats");
   const widgetInput = document.querySelector(".widget-input-1wlknav");
@@ -1219,6 +1219,12 @@ function addUserMessageToChat(custom_message) {
   allChat.appendChild(messageElement);
   chatContainer.scrollTop = chatContainer.scrollHeight;
   hideConvoStarters();
+  setAgentTyping();
+  const data = await fetch("http://localhost:3000/api/bot/message", { method: "POST", body: JSON.stringify({ botId: botId, query: message }) });
+  const answer = await data.json();
+  if (answer) {
+    addBotMessageToChat(answer.answer.text)
+  }
 }
 function addBotMessageToChat(message) {
   const chatContainer = document.querySelector(".chat-container-kasl12csd");

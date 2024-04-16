@@ -21,7 +21,7 @@ export default async function AgentSetup() {
         <h1 className="text-2xl font-bold">Agent Setup</h1>
         <AgentSetupInteractive />
       </div>
-      <div className="flex w-2/5">.</div>
+      <div className="flex w-2/5"></div>
     </div>
   );
 }

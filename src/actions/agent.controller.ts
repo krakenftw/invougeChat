@@ -1,12 +1,14 @@
+"use server";
 import { prismaClient } from "@/lib/db";
+import { Bot } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 export async function handleDatabaseUpdate(user: any, websiteName: string) {
-  const agentId = await uuidv4();
+  const agentId = uuidv4();
 
   const agentData = await prismaClient.agent.create({
     data: { id: agentId, userId: user.id, name: websiteName },
   });
-  const botId = await uuidv4();
+  const botId = uuidv4();
   await prismaClient.bot.create({
     data: {
       userId: user.id,
@@ -33,11 +35,11 @@ export async function handleDatabaseUpdate(user: any, websiteName: string) {
       },
     },
   });
-  return agentData;
+  return botId;
 }
 
 const data = {
-  chatBotTitle: "Inoz.ai",
+  chatBotTitle: "InvougeAI",
   welcomeMessage: "Welcome Gaurav 👋! How can we help you today?",
   widgetColor: "black",
   collectVisitorInfo: false,
@@ -59,4 +61,8 @@ const data = {
   removePoweredBy: false,
   chatIsLocked: true,
   typingMessage: "Agent is typing.....",
+};
+
+export const handleUserSettingUpdate = async (newData: Bot) => {
+  await prismaClient.bot.update({ where: { id: newData.id }, data: newData });
 };

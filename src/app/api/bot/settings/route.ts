@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { botId }: { botId: number } = await request?.json();
+    const { botId }: { botId: string } = await request?.json();
     if (!botId) {
       return NextResponse.json({ status: 401, error: "Bot ID required" });
     }

@@ -4,7 +4,6 @@ import { TokenTextSplitter } from "langchain/text_splitter";
 import { Document } from "langchain/document";
 import { addUserDocuments } from "@/lib/pgVectorStore";
 import { validateRequest } from "@/lib/validateRequest";
-import { v4 as uuidv4 } from "uuid";
 import { handleDatabaseUpdate } from "@/actions/agent.controller";
 import { prismaClient } from "@/lib/db";
 
@@ -56,12 +55,12 @@ export async function POST(request: Request) {
       ),
     );
 
-    const agentData = await handleDatabaseUpdate(user, websiteName);
-    addUserDocuments(agentData.id, splittedDocuments.flat());
+    const botData = await handleDatabaseUpdate(user, websiteName);
+    addUserDocuments(botData, splittedDocuments.flat());
 
     return NextResponse.json({
       status: 200,
-      data: agentData,
+      data: botData,
     });
   } catch (err) {
     console.log("Error while handling newModel route", err);

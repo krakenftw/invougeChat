@@ -1,3 +1,4 @@
+import BotSettingsUpdate from "@/components/BotSettingsUpdate";
 import { prismaClient } from "@/lib/db";
 import { validateRequest } from "@/lib/validateRequest";
 import { redirect } from "next/navigation";
@@ -7,11 +8,12 @@ export default async function Settings() {
   if (!user) {
     redirect("/login");
   }
-  const data = await prismaClient.agent.findFirst({
+  const data = await prismaClient.bot.findFirst({
     where: { userId: user.id },
   });
-  if (!data?.bot) {
-    redirect("/agent-setup");
+  console.log(data);
+  if (!data) {
+    return redirect("/agent-setup");
   }
-  const botId = data.bot.id;
+  return <BotSettingsUpdate data={data} />;
 }

@@ -26,7 +26,6 @@ export default async function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="dark">
             <Navbar userData={user} /> {children}
             <Toaster />
-            <p className="w-full text-center">Copyright ©InvougeChat</p>
           </ThemeProvider>
         </div>
       </body>

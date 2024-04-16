@@ -1,15 +1,22 @@
 import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 import { PromptTemplate } from "@langchain/core/prompts";
-import { templates } from "../../../lib/templates";
 import { ChatOpenAI } from "@langchain/openai";
 import { LLMChain } from "langchain/chains";
 import { similaritySearch } from "@/lib/pgVectorStore";
+import { templates } from "@/lib/templates";
+import { prismaClient } from "@/lib/db";
 
 export async function POST(req: Request) {
-  const { query, userId } = await req.json();
-  if (!query || !userId) {
+  const { query, botId } = await req.json();
+  if (!query || !botId) {
     return NextResponse.json({ error: "All fields Required" });
+  }
+  const dataPresent = await prismaClient.bot.findFirst({
+    where: { id: botId },
+  });
+  if (!dataPresent) {
+    return NextResponse.json({ status: 400, error: "Bot not registered" });
   }
 
   const promptTemplate = new PromptTemplate({
@@ -28,7 +35,7 @@ export async function POST(req: Request) {
     llm: chat,
   });
 
-  const docs = await similaritySearch(userId, query);
+  const docs = await similaritySearch(botId, query);
 
   if (!docs) {
     return NextResponse.json({ error: "No data found" });

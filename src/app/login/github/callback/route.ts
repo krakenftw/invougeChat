@@ -69,6 +69,7 @@ export async function GET(request: Request): Promise<Response> {
         github_id: githubUser.id,
         username: githubUser.login,
         password: "",
+        profile_picture: githubUser.avatar_url,
       },
     });
 
