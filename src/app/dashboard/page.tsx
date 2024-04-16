@@ -1,3 +1,4 @@
+import LinkToBot from "@/components/dashboard/LinkToBot";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { prismaClient } from "@/lib/db";
@@ -10,15 +11,20 @@ export default async function Dashboard() {
     redirect("/login");
   }
   const bot = await prismaClient.bot.findFirst({ where: { userId: user.id } });
-  const botCode = `<chatBotInvouge agent-id="${bot.id}"></chatBotInvouge> <script src="bot.js"></script>`;
+  const botCode: string = `<chatBotInvouge agent-id="${bot.id}"></chatBotInvouge> <script src="bot.js"></script>`;
   return (
-    <div>
-      <div className="flex flex-col gap-4 border-[1px] border-border p-4">
-        <h1>Add Bot to your website</h1>
-        <div className="flex items-center gap-4">
-          <Input value={botCode} className="p-6 font-mono text-xl" />
-          <Button className="rounded-lg p-5">Copy</Button>
-        </div>
+    <div className="flex flex-col gap-4">
+      <LinkToBot botCode={botCode} />
+      <div className="flex flex-col gap-4 rounded-lg border-[1px] border-border p-4">
+        <h1 className="text-lg">How to add bot to website</h1>
+        <p>
+          · Open the HTML file of your website where you want to add the bot
+        </p>
+        <p>
+          · Paste the copied code snippet into the appropriate section of your
+          HTML file. Typically, this is placed within the ${"<body>"} tag or at
+          the end of the ${"<head>"} section
+        </p>
       </div>
     </div>
   );

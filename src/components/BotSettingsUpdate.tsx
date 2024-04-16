@@ -37,7 +37,7 @@ export default function BotSettingsUpdate({ data }: { data: any }) {
   return (
     <div className="w-full">
       <form
-        className="p-4 w-3/5 flex flex-col gap-6 border-2 border-border rounded-xl"
+        className="p-4 w-3/5 flex flex-col gap-6 border-[1px] border-border rounded-xl"
         onSubmit={handleSubmit}
       >
         <div className="items-center w-full flex flex-wrap gap-4">

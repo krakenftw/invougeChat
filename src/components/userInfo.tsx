@@ -33,7 +33,7 @@ export default function UserInfo({ userData }: { userData: any }) {
           <DropdownMenuItem>Subscription</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Button className=" p-2" variant={"ghost"} onClick={handleLogout}>
+            <Button className="p-0" variant={"ghost"} onClick={handleLogout}>
               Logout
             </Button>
           </DropdownMenuItem>

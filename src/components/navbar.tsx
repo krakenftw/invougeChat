@@ -8,6 +8,7 @@ import LogoDark from "../../public/Logo_Dark.svg";
 import { useTheme } from "next-themes";
 import UserInfo from "./userInfo";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function Navbar({ userData }: { userData: any }) {
   const router = useRouter();
@@ -16,12 +17,14 @@ function Navbar({ userData }: { userData: any }) {
     <div className="flex justify-center items-center">
       <div className="gap-80 w-fit mx-10 my-5 rounded-full border-[1px] border-primary shadow-lg px-2 py-1 grid grid-flow-col grid-cols-3 auto-cols-max justify-between items-center">
         <div className=" ">
-          <Image
-            alt="InvougeChat"
-            width={"50"}
-            height="50"
-            src={theme == "light" ? Logo : LogoDark}
-          />
+          <Link href={"/"}>
+            <Image
+              alt="InvougeChat"
+              width={"50"}
+              height="50"
+              src={theme == "light" ? Logo : LogoDark}
+            />
+          </Link>
         </div>
         <div>
           <Button
