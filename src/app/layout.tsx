@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { validateRequest } from "@/lib/validateRequest";
 import { Toaster } from "@/components/ui/toaster";
+import { prismaClient } from "@/lib/db";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { user } = await validateRequest();
+  console.log(await prismaClient.visitor.findMany());
   return (
     <html lang="en">
       <body className={inter.className}>

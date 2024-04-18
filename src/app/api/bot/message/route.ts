@@ -53,5 +53,9 @@ export async function POST(req: Request) {
     summaries: singleN,
     question: query,
   });
+  await prismaClient.bot.update({
+    where: { id: botId },
+    data: { botInteractions: dataPresent.botInteractions + 1 },
+  });
   return NextResponse.json({ answer: ans, links });
 }

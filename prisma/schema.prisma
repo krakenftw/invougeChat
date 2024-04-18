@@ -32,9 +32,12 @@ model Agent{
   name String
   bot Bot?
 }
+
 model Bot{
   id String @id  
   userId String
+  visitors Visitor[]
+  botInteractions Int @default(0)
   agent Agent @relation(fields:[agentId],references:[id])
   agentId String @unique
   chatBotTitle     String
@@ -63,4 +66,13 @@ model Session {
   email String
   expiresAt DateTime
   user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model Visitor{
+  id Int @id @default(autoincrement())
+  bot Bot? @relation(fields: [botId], references: [id])
+  botId String?
+  name String?
+  email String?
+  createdAt DateTime @default(now())
 }

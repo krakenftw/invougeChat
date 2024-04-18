@@ -1,7 +1,6 @@
 const botTag = document.getElementsByTagName("chatBotInvouge")[0];
-const botId = botTag.getAttribute("agent-id")
+const botId = botTag.getAttribute("agent-id");
 let defaultSettings;
-
 
 const socialIcons = {
   twitter: {
@@ -393,8 +392,7 @@ function createChatWidget(defaultSettings) {
   if (!defaultSettings.removePoweredBy) {
     var poweredText = document.createElement("p");
     poweredText.classList.add("powered-text-kpk670t");
-    poweredText.innerHTML =
-      "Powered by <b>InvougeChat.ai</b>";
+    poweredText.innerHTML = "Powered by <b>InvougeChat.ai</b>";
     widget.appendChild(poweredText);
   }
 
@@ -495,7 +493,7 @@ function createChatWidget(defaultSettings) {
   }
 
   chatWrapper.appendChild(widgetOpenDiv);
-  botTag.appendChild(chatWrapper)
+  botTag.appendChild(chatWrapper);
   const styleElement = document.createElement("style");
 
   const cssStyles = `
@@ -628,10 +626,11 @@ function createChatWidget(defaultSettings) {
         font-family:${defaultSettings.fontFamily},sans-serif;
         position:fixed;
         ${defaultSettings.widgetButtonPosition}: 20px;
-        align-items:${defaultSettings.widgetButtonPosition == "left"
-      ? "flex-start"
-      : "flex-end"
-    };
+        align-items:${
+          defaultSettings.widgetButtonPosition == "left"
+            ? "flex-start"
+            : "flex-end"
+        };
         display:flex;
         flex-direction:column;
         bottom: 20px;
@@ -1068,25 +1067,22 @@ function createChatWidget(defaultSettings) {
 let themeColor;
 
 document.addEventListener("DOMContentLoaded", async function () {
-  botTag.classList.add("invouge-bot-chat")
+  botTag.classList.add("invouge-bot-chat");
   let isWidgetOpened = false;
 
   try {
-    const response = await fetch(
-      "http://localhost:3000/api/bot/settings",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          botId
-        }),
-      },
-    );
+    const response = await fetch("http://localhost:3000/api/bot/settings", {
+      method: "POST",
+      body: JSON.stringify({
+        botId,
+      }),
+    });
 
     if (response.error) {
       throw new Error(`Failed to fetch data. Status: ${response.status}`);
       return;
     }
-    const body = await response.json()
+    const body = await response.json();
     const data = body.data;
     defaultSettings = data;
     createChatWidget(data);
@@ -1192,7 +1188,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 function submitUserInfo() {
   const emailForm = document.querySelector("#email-form");
   emailForm.style.display = "none";
-  console.log("Chat started");
+  const name = document.getElementById("widget-user-email").value;
+  const email = document.getElementById("widget-user-name").value;
+  console.log(name, email);
+  fetch("http://localhost:3000/api/bot/visitor", {
+    method: "POST",
+    body: JSON.stringify({ name: name, email: email, botId: botId }),
+  });
 }
 function handleOnEnterPressed(event) {
   if (event.key === "Enter") {
@@ -1220,10 +1222,13 @@ async function addUserMessageToChat(custom_message) {
   chatContainer.scrollTop = chatContainer.scrollHeight;
   hideConvoStarters();
   setAgentTyping();
-  const data = await fetch("http://localhost:3000/api/bot/message", { method: "POST", body: JSON.stringify({ botId: botId, query: message }) });
+  const data = await fetch("http://localhost:3000/api/bot/message", {
+    method: "POST",
+    body: JSON.stringify({ botId: botId, query: message }),
+  });
   const answer = await data.json();
   if (answer) {
-    addBotMessageToChat(answer.answer.text)
+    addBotMessageToChat(answer.answer.text);
   }
 }
 function addBotMessageToChat(message) {

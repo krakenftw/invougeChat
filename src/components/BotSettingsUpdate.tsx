@@ -89,7 +89,31 @@ export default function BotSettingsUpdate({ data }: { data: any }) {
                 </SelectGroup>
               </SelectContent>
             </Select>
-          </div>{" "}
+          </div>
+          <div>
+            <label htmlFor="widgetButtonPosition">Collect Visitor Info</label>
+            <Select
+              defaultValue={settings.collectVisitorInfo}
+              onValueChange={(d) => {
+                if (d == "true") {
+                  setSettings({ ...settings, collectVisitorInfo: true });
+                }
+                if (d == "false") {
+                  setSettings({ ...settings, collectVisitorInfo: false });
+                }
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue defaultValue={settings.collectVisitorInfo} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="true">True</SelectItem>
+                  <SelectItem value="false">False</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
           <div>
             <label htmlFor="fontFamily">Font Family:</label>
             <Input

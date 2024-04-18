@@ -11,20 +11,33 @@ export default function Home() {
         <div className="rounded-full border-[1px] border-primary w-fit px-4 py-2 backdrop-blur bg-secondary/50 ">
           <p>Personalised chatbot in minutes</p>
         </div>
-        <h1 className="text-4xl font-bold text-primary">Invouge Chat</h1>
-        <h1 className="text-3xl font-semibold text-center whitespace-break-spaces">
+        <h1 className="text-5xl font-bold text-primary tracking-wider">
+          Invouge-Chat
+        </h1>
+        <h1 className="text-3xl text-muted-foreground text-center whitespace-break-spaces">
           Revolutionize Conversations with AI-Driven Chatbot Mastery: Precision
           through Data Training and Dynamic Features for Unparalleled
           Interaction.
         </h1>
-        <Button
-          onClick={() => {
-            router.push("/dashboard");
-          }}
-          className="px-6 text-md py-4"
-        >
-          Start Building
-        </Button>
+        <div className="flex gap-6">
+          <Button
+            onClick={() => {
+              router.push("/dashboard");
+            }}
+            className="px-11 shadow-secondary shadow-lg text-md py-6"
+          >
+            Start Building
+          </Button>
+          <Button
+            variant={"outline"}
+            onClick={() => {
+              router.push("/dashboard");
+            }}
+            className="hover:bottom-4 px-11 shadow-secondary shadow-lg text-md py-6"
+          >
+            Try it
+          </Button>
+        </div>
       </div>
     </div>
   );
