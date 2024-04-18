@@ -11,6 +11,9 @@ export default async function Dashboard() {
     redirect("/login");
   }
   const bot = await prismaClient.bot.findFirst({ where: { userId: user.id } });
+  if (!bot) {
+    redirect("/agent-setup");
+  }
   const botCode: string = `<chatBotInvouge agent-id="${bot.id}"></chatBotInvouge> <script src="bot.js"></script>`;
   return (
     <div className="flex flex-col gap-4">

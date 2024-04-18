@@ -1,4 +1,5 @@
 import DeleteBot from "@/components/dashboard/DeleteBot";
+import SidebarButtons from "@/components/dashboard/SideBarButtons";
 import { Button } from "@/components/ui/button";
 import { prismaClient } from "@/lib/db";
 import { validateRequest } from "@/lib/validateRequest";
@@ -27,25 +28,10 @@ export default async function SettingLayout({
   return (
     <div className="flex flex-grow gap-4">
       <div className="flex justify-between border-[1px] rounded-r-md mb-6 border-border flex-col p-3">
-        <div className="flex flex-col gap-3">
-          <Link className="w-full" href={"/dashboard"}>
-            <Button className="text-md w-full p-6" variant={"default"}>
-              <HomeIcon />
-            </Button>
-          </Link>
-          <Link className="w-full" href={"/dashboard/settings"}>
-            <Button className="text-md w-full p-6" variant={"outline"}>
-              <GearIcon />
-            </Button>
-          </Link>
-          <Link className="w-full" href={"/dashboard/stats"}>
-            <Button className="text-md p-6" variant={"outline"}>
-              <StackIcon />
-            </Button>
-          </Link>
-        </div>
+        <SidebarButtons />
+
         <div>
-          <DeleteBot />
+          <DeleteBot user={user} />
         </div>
       </div>
       <div className="w-full px-4">{children}</div>

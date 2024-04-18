@@ -1,6 +1,6 @@
 "use server";
 import { prismaClient } from "@/lib/db";
-import { Bot } from "@prisma/client";
+import { Bot, User } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 export async function handleDatabaseUpdate(user: any, websiteName: string) {
   const agentId = uuidv4();
@@ -65,4 +65,9 @@ const data = {
 
 export const handleUserSettingUpdate = async (newData: Bot) => {
   await prismaClient.bot.update({ where: { id: newData.id }, data: newData });
+};
+
+export const handleDeleteBot = async (user: User) => {
+  await prismaClient.bot.deleteMany({ where: { userId: user.id } });
+  await prismaClient.agent.deleteMany({ where: { userId: user.id } });
 };

@@ -27,15 +27,11 @@ function Navbar({ userData }: { userData: any }) {
           </Link>
         </div>
         <div>
-          <Button
-            onClick={() => {
-              router.push(userData ? "/dashboard" : "/login");
-            }}
-            variant={"secondary"}
-            className=" shadow-md"
-          >
-            {userData ? "Dashboard" : "Login"}
-          </Button>
+          <Link href={userData ? "/dashboard" : "/login"}>
+            <Button variant={"secondary"} className=" shadow-md">
+              {userData ? "Dashboard" : "Login"}
+            </Button>
+          </Link>
         </div>
 
         <div className="flex gap-2 items-center justify-center">

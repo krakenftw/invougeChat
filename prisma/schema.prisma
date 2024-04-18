@@ -33,6 +33,7 @@ model Agent{
   bot Bot?
 }
 
+
 model Bot{
   id String @id  
   userId String
