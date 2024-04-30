@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,68 +6,67 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id       String    @id
-  name String?
-  email String
-  password String?
-  agent Agent? 
-  sessions Session[]
-  github_id Int? @unique
-  username String?
-  profile_picture String? @default("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+  id              String    @id
+  username        String?
+  github_id       Int?      @unique
+  email           String
+  name            String?
+  password        String?
+  profile_picture String?   @default("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+  agent           Agent?
+  sessions        Session[]
 }
 
-
-model Agent{
-  id String @id 
+model Agent {
+  id     String @id
   userId String @unique
-  user User @relation(fields: [userId], references: [id])
-  name String
-  bot Bot?
+  name   String
+  user   User   @relation(fields: [userId], references: [id])
+  bot    Bot?
 }
 
-
-model Bot{
-  id String @id  
-  userId String
-  visitors Visitor[]
-  botInteractions Int @default(0)
-  agent Agent @relation(fields:[agentId],references:[id])
-  agentId String @unique
-  chatBotTitle     String
-  welcomeMessage   String
-  widgetColor      String
-  collectVisitorInfo Boolean
+model Bot {
+  id                   String    @id
+  agentId              String    @unique
+  chatBotTitle         String
+  welcomeMessage       String
+  widgetColor          String
+  collectVisitorInfo   Boolean
   widgetButtonPosition String
-  fontFamily       String
-  fontUrl          String
-  convoStarters    String[]
-  profileDescription String
-  placeholder      String
-  style            String
-  showPopupText    Boolean
-  popupText        String
-  expandByDefault  Boolean
-  removePoweredBy  Boolean
-  chatIsLocked     Boolean
-  typingMessage    String
+  fontFamily           String
+  fontUrl              String
+  convoStarters        String[]
+  profileDescription   String
+  placeholder          String
+  style                String
+  showPopupText        Boolean
+  popupText            String
+  expandByDefault      Boolean
+  removePoweredBy      Boolean
+  chatIsLocked         Boolean
+  typingMessage        String
+  userId               String
+  botInteractions      Int       @default(0)
+  agent                Agent     @relation(fields: [agentId], references: [id])
+  visitors             Visitor[]
 }
 
 model Session {
-  id        String   @id 
+  id        String   @id
   userId    String
-  name String
-  email String
   expiresAt DateTime
-  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  email     String
+  name      String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Visitor{
-  id Int @id @default(autoincrement())
-  bot Bot? @relation(fields: [botId], references: [id])
-  botId String?
-  name String?
-  email String?
+model Visitor {
+  id        Int      @id @default(autoincrement())
+  botId     String?
+  name      String?
+  email     String?
   createdAt DateTime @default(now())
+  bot       Bot?     @relation(fields: [botId], references: [id])
 }

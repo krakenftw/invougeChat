@@ -10,6 +10,7 @@ import {
 import { Button } from "./ui/button";
 import axios from "axios";
 import { signout } from "@/actions/auth.actions";
+import Link from "next/link";
 
 export default function UserInfo({ userData }: { userData: any }) {
   const handleLogout = () => {
@@ -27,7 +28,9 @@ export default function UserInfo({ userData }: { userData: any }) {
         <DropdownMenuContent>
           <DropdownMenuLabel>{userData.name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <Link href={"/profile"}>
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+          </Link>
           <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Team</DropdownMenuItem>
           <DropdownMenuItem>Subscription</DropdownMenuItem>
