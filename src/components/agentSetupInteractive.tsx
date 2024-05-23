@@ -46,12 +46,12 @@ export default function AgentSetupInteractive() {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-center gap-4">
+    <>
+      <div className="flex md:items-center md:justify-start md:gap-4 flex-col md:flex-row w-full">
         <Input
           onChange={(e) => setInitUrl(e.target.value)}
           placeholder="Your Website"
-          className="my-6"
+          className="my-6 md:w-3/5"
         />
         <Button disabled={loading} onClick={getLinks}>
           Get Links
@@ -68,6 +68,6 @@ export default function AgentSetupInteractive() {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }

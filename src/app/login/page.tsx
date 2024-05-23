@@ -96,12 +96,12 @@ function Login() {
         <div className="w-full flex flex-col gap-4">
           <Button
             onClick={() => router.push("/login/github")}
-            className="py-6 w-full rounded-md bg-black text-white flex gap-4 hover:bg-transparent items-center justify-center border-border border-[1px]"
+            className="py-6 w-full bg-black text-white flex gap-4 hover:bg-transparent items-center justify-center border-border border-[1px]"
           >
             <Image src={GithubLogo} alt="Githhub Logo" className="w-6" />
             Login With Github
           </Button>
-          <Button className="py-6 w-full rounded-md bg-black hover:bg-transparent text-white flex gap-4 items-center justify-center border-border border-[1px]">
+          <Button className="py-6 w-full bg-black hover:bg-transparent text-white flex gap-4 items-center justify-center border-border border-[1px]">
             <Image src={GoogleLogo} alt="Githhub Logo" className="w-6" />
             Login With Google
           </Button>

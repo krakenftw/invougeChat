@@ -16,8 +16,8 @@ export default async function AgentSetup() {
     return redirect("/dashboard");
   }
   return (
-    <div className="flex w-screen">
-      <div className="p-5 w-3/5 flex flex-col">
+    <div className="flex flex-col gap-2 w-screen">
+      <div className="p-5 flex flex-col">
         <h1 className="text-2xl font-bold">Agent Setup</h1>
         <AgentSetupInteractive />
       </div>

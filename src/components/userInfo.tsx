@@ -8,9 +8,9 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import axios from "axios";
 import { signout } from "@/actions/auth.actions";
 import Link from "next/link";
+import { ModeToggle } from "./ui/theme-toggle";
 
 export default function UserInfo({ userData }: { userData: any }) {
   const handleLogout = () => {
@@ -25,8 +25,10 @@ export default function UserInfo({ userData }: { userData: any }) {
             <AvatarFallback>{userData.name.substring(0, 2)}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>{userData.name}</DropdownMenuLabel>
+        <DropdownMenuContent className="border-gray-800">
+          <DropdownMenuLabel className="flex flex-row items-center justify-between">
+            <h2 className="text-lg">{userData.name}</h2>
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <Link href={"/profile"}>
             <DropdownMenuItem>Profile</DropdownMenuItem>

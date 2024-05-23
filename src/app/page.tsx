@@ -1,5 +1,4 @@
 "use client";
-import { AnimatedBeam } from "@/components/ui/animated-beam";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import GridPattern from "@/components/ui/grid-pattern";
@@ -16,17 +15,17 @@ export default function Home() {
         y={-1}
         className="[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] "
       />
-      <div className="flex w-full lex-grow gap-8 flex-col justify-center items-center h-full">
+      <div className="flex w-full flex-grow gap-8 flex-col justify-center items-center h-full">
         <Badge text="Personalised chatbot in minutes" />
-        <h1 className="text-5xl font-bold text-primary tracking-wider">
-          Invouge-Chat
+        <h1 className="text-5xl font-bold text-primary tracking-wider text-center">
+          Invouge Chat
         </h1>
         <h1 className="text-lg md:text-3xl w-4/5 md:w-1/2 text-muted-foreground text-center whitespace-break-spaces">
           Revolutionize Conversations with AI-Driven Chatbot Mastery: Precision
           through Data Training and Dynamic Features for Unparalleled
           Interaction.
         </h1>
-        <div className="flex gap-6">
+        <div className="flex gap-6 md:flex-row flex-col">
           <Button
             onClick={() => {
               router.push("/dashboard");

@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
 import { Button } from "./ui/button";
-import ThemeToggle from "./ui/theme-toggle";
+import ThemeToggle, { ModeToggle } from "./ui/theme-toggle";
 import Image from "next/image";
 import Logo from "../../public/Logo.svg";
 import LogoDark from "../../public/Logo_Dark.svg";
 import { useTheme } from "next-themes";
 import UserInfo from "./userInfo";
 import Link from "next/link";
+<ThemeToggle />;
 
 function Navbar({ userData }: { userData: any }) {
   const { theme } = useTheme();
@@ -24,16 +25,20 @@ function Navbar({ userData }: { userData: any }) {
             />
           </Link>
         </div>
-        <div className="hidden md:flex ">
-          <Link href={userData ? "/dashboard" : "/login"}>
-            <Button variant={"secondary"} className="shadow-md">
-              {userData ? "Dashboard" : "Login"}
-            </Button>
-          </Link>
+        <div className="hidden md:flex">
+          {userData && (
+            <Link
+              href="/dashboard"
+              className="border border-gray-800 px-2 rounded-xl py-1 bg-secondary text-sm"
+            >
+              Dashboard
+            </Link>
+          )}
         </div>
         <div className="flex gap-2 items-center justify-center">
-          <ThemeToggle />
           {userData && <UserInfo userData={userData} />}
+
+          <ModeToggle />
         </div>
       </div>
     </div>

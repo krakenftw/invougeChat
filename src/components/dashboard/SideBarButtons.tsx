@@ -8,7 +8,7 @@ export default function SidebarButtons() {
   const pathname = usePathname();
   const currPage = pathname.split("/")[2];
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-row gap-3">
       <Link className="w-full" href={"/dashboard"}>
         <Button
           className="text-md w-full p-6"
