@@ -13,9 +13,9 @@ import {
   SelectItem,
   SelectValue,
 } from "./ui/select";
+import Script from "next/script";
 
 export default function BotSettingsUpdate({ data }: { data: any }) {
-  console.log(data);
   const [settings, setSettings] = useState(data);
   const [loading, setLoading] = useState(false);
 
@@ -104,7 +104,7 @@ export default function BotSettingsUpdate({ data }: { data: any }) {
               }}
             >
               <SelectTrigger>
-                <SelectValue defaultValue={settings.collectVisitorInfo} />
+                <SelectValue defaultValue={settings?.collectVisitorInfo} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -189,6 +189,13 @@ export default function BotSettingsUpdate({ data }: { data: any }) {
           )}
         </Button>
       </form>
+      <Script
+        src=""
+        strategy="lazyOnload"
+        onLoad={() =>
+          console.log(`script loaded correctly, window.FB has been populated`)
+        }
+      />
     </div>
   );
 }

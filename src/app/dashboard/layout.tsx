@@ -1,16 +1,9 @@
 import DeleteBot from "@/components/dashboard/DeleteBot";
 import SidebarButtons from "@/components/dashboard/SideBarButtons";
-import { Button } from "@/components/ui/button";
 import { prismaClient } from "@/lib/db";
 import { validateRequest } from "@/lib/validateRequest";
-import {
-  GearIcon,
-  HomeIcon,
-  StackIcon,
-  TrashIcon,
-} from "@radix-ui/react-icons";
-import Link from "next/link";
 import { redirect } from "next/navigation";
+import Script from "next/script";
 
 export default async function SettingLayout({
   children,
@@ -27,9 +20,8 @@ export default async function SettingLayout({
   }
   return (
     <div className="flex flex-grow gap-4">
-      <div className="flex justify-between border-[1px] rounded-r-md mb-6 border-border flex-col p-3">
+      <div className="flex justify-between border-[1px] border-l-0 rounded-r-lg mb-6 border-border flex-col p-3">
         <SidebarButtons />
-
         <div>
           <DeleteBot user={user} />
         </div>

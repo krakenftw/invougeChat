@@ -7,16 +7,14 @@ import Logo from "../../public/Logo.svg";
 import LogoDark from "../../public/Logo_Dark.svg";
 import { useTheme } from "next-themes";
 import UserInfo from "./userInfo";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 function Navbar({ userData }: { userData: any }) {
-  const router = useRouter();
   const { theme } = useTheme();
   return (
-    <div className="flex justify-center items-center">
-      <div className="gap-80 w-fit mx-10 my-5 rounded-full border-[1px] border-primary shadow-lg px-2 py-1 grid grid-flow-col grid-cols-3 auto-cols-max justify-between items-center">
-        <div className=" ">
+    <div className="flex w-full overflow-hidden justify-center items-center md:px-4">
+      <div className="w-full max-w-screen-lg mx-10 my-5 rounded-full border-[1px] border-primary shadow-lg px-2 py-1 flex  md:flex-row justify-between items-center">
+        <div className=" flex items-center justify-center">
           <Link href={"/"}>
             <Image
               alt="InvougeChat"
@@ -26,14 +24,13 @@ function Navbar({ userData }: { userData: any }) {
             />
           </Link>
         </div>
-        <div>
+        <div className="hidden md:flex ">
           <Link href={userData ? "/dashboard" : "/login"}>
-            <Button variant={"secondary"} className=" shadow-md">
+            <Button variant={"secondary"} className="shadow-md">
               {userData ? "Dashboard" : "Login"}
             </Button>
           </Link>
         </div>
-
         <div className="flex gap-2 items-center justify-center">
           <ThemeToggle />
           {userData && <UserInfo userData={userData} />}

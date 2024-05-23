@@ -626,11 +626,10 @@ function createChatWidget(defaultSettings) {
         font-family:${defaultSettings.fontFamily},sans-serif;
         position:fixed;
         ${defaultSettings.widgetButtonPosition}: 20px;
-        align-items:${
-          defaultSettings.widgetButtonPosition == "left"
-            ? "flex-start"
-            : "flex-end"
-        };
+        align-items:${defaultSettings.widgetButtonPosition == "left"
+      ? "flex-start"
+      : "flex-end"
+    };
         display:flex;
         flex-direction:column;
         bottom: 20px;
@@ -1083,6 +1082,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       return;
     }
     const body = await response.json();
+    console.log(body)
     const data = body.data;
     defaultSettings = data;
     createChatWidget(data);
