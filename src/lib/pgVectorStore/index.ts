@@ -9,11 +9,11 @@ import { PoolConfig } from "pg";
 const config = {
   postgresConnectionOptions: {
     type: "postgres",
-    host: "aws-0-ap-south-1.pooler.supabase.com",
-    port: 5432,
-    user: "postgres.didejjmubtgyuyreifhm",
-    password: "Terimakichut@123",
-    database: "postgres",
+    host: process.env.VECTOR_DATABASE_HOST,
+    port: parseInt(process.env.VECTOR_DATABASE_PORT!, 10),
+    user: process.env.VECTOR_DATABASE_USER,
+    password: process.env.VECTOR_DATABASE_PASSWORD,
+    database: process.env.VECTOR_DATABASE_NAME,
   } as PoolConfig,
   tableName: "testlangchain",
   columns: {
